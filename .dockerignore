@@ -1,6 +1,6 @@
 #Ignore files when building docker
 /files
-*.txt
+requirements.txt
 .gitignore
 .git
 *.md
