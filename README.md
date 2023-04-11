@@ -14,14 +14,30 @@ Install docker for windows using wsl: https://docs.docker.com/desktop/windows/ws
 All CT scans should be in one folder stored as nifti images (extionsions: .nii.gz or .nii). The filename before the extension can be an ID, this ID will return in all the output files. In the same folder a inference_arguments.txt should be located so the docker knows what type of segmentations to return. In the example file in this github repo you can inspect the possible arguments and alter them if required. This folder should be used as the input folder to run the docker container. The output folder can be chosen.
 
 ## Run the docker container
-To run the docker container the "Input folder" described above should be mounted to the container. Furthermore, the container should run in interactive mode.
+To run the docker container the "Input folder" described above should be mounted (-v) to the worspace/data folder in the container (ctlesionseg). Furthermore, the container should run in interactive mode (-ti).
 An example of the command:
 
 ```
-function test() {
-  console.log("This code will have a copy button to the right of it");
-}
+docker run -ti -v C:\usr\documents:/workspace/data ctlesionseg
+```
+
+Now the container starts in interactive mode. In the command line you can execute model inference by calling with python the run.py file. The run.py file requires an input folder (mounted above) and an output folder. If you use the same folder for input (/workspace/data) as for output, all output folders and files will be returned to your local disk.
+
+```
+python /files/run.py /workspace/data /output/folder
 ```
 
 ## The output folders
+In the output folder several intermediate processed folders are available for inspection and the final output folder. 
+
+Intermediate processing folders:
+/brainmask: Masks of the brain that are used to remove background, eroded versions are used to reduce the ventricle mask.
+/imagesTs: The CTs processed as input for the nnUnet models for inference.
+/predicted: Output files of the nnUnet when the imagesTs are used as input.
+/ventriclemask: For white matter lesion segmentation a ventricle mask is used to select periventricular (by default in a 10mm radius) lesions.
+
+Final results folder:
+/results: Contains all the relevant files per ID in a subfolder. 
+
+
 
