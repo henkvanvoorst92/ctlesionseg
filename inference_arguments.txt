@@ -1,10 +1,10 @@
 #Input path for directory with all CTs as .nii.gz
-('path_in', '/mnt/c/Users/henkvanvoorst/Documents/PhD/WML_docker/sandbox/original')
+('path_in', '/workspace/data')
 #Path to the model directory
-('path_model', '/mnt/c/Users/henkvanvoorst/Documents/PhD/WML_docker/models/WMLCT')
+('path_model', '/models')
 #Output directory
-('path_out', '/mnt/c/Users/henkvanvoorst/Documents/PhD/WML_docker/sandbox/')
-#Analysis type: wml, 24h_infarct, 1w_infarct
+('path_out', '/workspace/data')
+#Analysis type, the kind of lesion segmentation used as output: wml, 24h_infarct, 1w_infarct
 ('analysis','wml')
 #The final output name for the image: ID_imagename.nii.gz
 ('imagename', 'ncct')
