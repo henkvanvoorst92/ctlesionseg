@@ -9,9 +9,10 @@ RUN  apt-get -y update && apt-get -y install git && pip install --upgrade pip &&
 RUN git clone https://github.com/henkvanvoorst92/ctlesionseg
 #copy all models from the local pc to the image
 COPY /models /models
-#Insert an example inference_arguments.txt in the data repo to be bind mounted
-COPY inference_arguments.txt /workspace/data
-#Install other required packages, 
+#Not required: Insert an example inference_arguments.txt in the data repo to be bind mounted
+#COPY inference_arguments.txt /workspace/data
+#COPY /requirements.txt /requirements.txt
+#Install other required packages, /ctlesionseg/
 RUN python -m pip install -r /ctlesionseg/requirements.txt
 #set default workdir with scripts and args
 WORKDIR /workspace
@@ -22,5 +23,5 @@ WORKDIR /workspace
 
 #Q5: What does CMD do? exec param1 param2
 #CMD ["python", "./run.py", "inference_arguments.txt"]
-#ENTRYPOINT ["python ./run.py", "inference_arguments.txt"]
+#ENTRYPOINT ["python /ctlesionseg/files/run.py"]
 
