@@ -3,13 +3,15 @@
 #Pull base image with cuda capabilities 
 FROM pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime
 WORKDIR /
-RUN  apt-get -y update && apt-get -y install git
-#RUN mkdir /workspace/data
-#copy files and models to local
+RUN  apt-get -y update && apt-get -y install git && mkdir -p /workspace/data
+#Fetch all files with scripts for the image
 RUN git clone https://github.com/henkvanvoorst92/ctlesionseg
+#copy all models from the local pc to the image
 COPY /models /models
-#COPY ctlesionseg/inference_arguments.txt /workspace/data
-#RUN python -m pip install -r ctlesionseg/requirements.txt
+#Insert an example inference_arguments.txt in the data repo to be bind mounted
+#COPY /ctlesionseg/inference_arguments.txt /workspace/data
+#Install other required packages
+RUN python -m pip install -r /ctlesionseg/requirements.txt
 #set default workdir with scripts and args
 WORKDIR /workspace
 
