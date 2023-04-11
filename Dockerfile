@@ -11,9 +11,8 @@ RUN git clone https://github.com/henkvanvoorst92/ctlesionseg
 COPY /models /models
 #Insert an example inference_arguments.txt in the data repo to be bind mounted
 COPY inference_arguments.txt /workspace/data
-COPY /requirements.txt /requirements.txt
 #Install other required packages, 
-RUN python -m pip install -r requirements.txt
+RUN python -m pip install -r /ctlesionseg/requirements.txt
 #set default workdir with scripts and args
 WORKDIR /workspace
 
