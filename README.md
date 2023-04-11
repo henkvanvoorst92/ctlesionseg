@@ -1,5 +1,5 @@
 ### Docker container: ctlesionseg
-<b> General comments
+<b> General comments <b> \n
 This repository contains the scripts used to construct a docker container for white matter lesion and follow-up infarct lesion segmentation in CT. The docker container can be found under henkvanvoorst92/ctlesionseg. All rights are reserved and no warrantees for model performance are given in for any use. To run this container a Linux OS is preferred, a GPU is required.
 
 ##How to install docker on your workstation
