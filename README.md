@@ -23,13 +23,13 @@ Read more on using bind mount of a local folder to a docker container :  https:/
 An example of the command for windows:
 
 ```
-docker run -ti -v C:\usr\documents:/workspace/data ctlesionseg
+docker run -ti -v C:\usr\documents\yourfolder:/workspace/data ctlesionseg
 ```
 
 Now the container starts in interactive mode. In the command line you can execute model inference by calling with python the run.py file. The run.py file requires an input folder (mounted above) and an output folder. If you use the same folder for input (/workspace/data) as for output, all output folders and files will be returned to your local disk.
 
 ```
-python /files/run.py /workspace/data /output/folder
+python /files/run.py /workspace/data/yourfolder /output/folder
 ```
 
 ## The output folders
@@ -42,7 +42,7 @@ Intermediate processing folders:\
 /ventriclemask: For white matter lesion segmentation a ventricle mask is used to select periventricular (by default in a 10mm radius) lesions.\
 \
 Final results folder:\
-/results: Contains all the relevant files per ID in a subfolder. \
+/results: Contains all the relevant files per ID in a subfolder.
 
 
 
