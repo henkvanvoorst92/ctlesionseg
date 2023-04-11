@@ -7,7 +7,9 @@ https://docs.docker.com/engine/install/ubuntu/
 
 ### For Windows OS install windows subsystem for linux 2: 
 Install WSL-2 for windows: https://learn.microsoft.com/nl-nl/windows/wsl/install-manual#step-4---download-the-linux-kernel-update-package
+
 Ensure that you enable VM platform and HV: https://aka.ms/wsl2-install
+
 Install docker for windows using wsl: https://docs.docker.com/desktop/windows/wsl/
 
 ## Prepare your data: Input folder
@@ -15,6 +17,7 @@ All CT scans should be in one folder stored as nifti images (extionsions: .nii.g
 
 ## Run the docker container
 To run the docker container the "Input folder" described above should be mounted (-v) to the worspace/data folder in the container (ctlesionseg). Furthermore, the container should run in interactive mode (-ti). 
+
 Read more on using bind mount of a local folder to a docker container :  https://docs.docker.com/storage/bind-mounts/
 
 An example of the command for windows:
@@ -39,6 +42,7 @@ Intermediate processing folders:
 /ventriclemask: For white matter lesion segmentation a ventricle mask is used to select periventricular (by default in a 10mm radius) lesions.
 
 Final results folder:
+
 /results: Contains all the relevant files per ID in a subfolder. 
 
 
