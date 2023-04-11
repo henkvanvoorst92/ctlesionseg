@@ -16,6 +16,7 @@ All CT scans should be in one folder stored as nifti images (extionsions: .nii.g
 ## Run the docker container
 To run the docker container the "Input folder" described above should be mounted to the container. Furthermore, the container should run in interactive mode.
 An example of the command:
+
 ```
 function test() {
   console.log("This code will have a copy button to the right of it");
