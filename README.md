@@ -1,5 +1,5 @@
 # Docker container: ctlesionseg
-This repository contains the scripts used to construct a docker container for white matter lesion and follow-up infarct lesion segmentation in CT. The docker container can be found under henkvanvoorst92/ctlesionseg. All rights are reserved and no warrantees for model performance are given in for any use. To run this container a Linux OS is preferred, a GPU is required.
+This repository contains the scripts used to construct a docker image and container for white matter lesion and follow-up infarct lesion segmentation in CT. The docker container can be found under henkvanvoorst92/ctlesionseg. All rights are reserved and no warrantees for model performance are given in for any use. To run this container a Linux OS is preferred, a GPU is required.
 
 ## How to install docker on your workstation
 ### For Linux OS:
@@ -14,8 +14,10 @@ Install docker for windows using wsl: https://docs.docker.com/desktop/windows/ws
 All CT scans should be in one folder stored as nifti images (extionsions: .nii.gz or .nii). The filename before the extension can be an ID, this ID will return in all the output files. In the same folder a inference_arguments.txt should be located so the docker knows what type of segmentations to return. In the example file in this github repo you can inspect the possible arguments and alter them if required. This folder should be used as the input folder to run the docker container. The output folder can be chosen.
 
 ## Run the docker container
-To run the docker container the "Input folder" described above should be mounted (-v) to the worspace/data folder in the container (ctlesionseg). Furthermore, the container should run in interactive mode (-ti).
-An example of the command:
+To run the docker container the "Input folder" described above should be mounted (-v) to the worspace/data folder in the container (ctlesionseg). Furthermore, the container should run in interactive mode (-ti). 
+Read more on using bind mount of a local folder to a docker container :  https://docs.docker.com/storage/bind-mounts/
+
+An example of the command for windows:
 
 ```
 docker run -ti -v C:\usr\documents:/workspace/data ctlesionseg
