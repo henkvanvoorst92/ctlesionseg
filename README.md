@@ -26,10 +26,12 @@ An example of the command for windows:
 docker run -ti -v C:\usr\documents\yourfolder:/workspace/data ctlesionseg
 ```
 
-Now the container starts in interactive mode. In the command line you can execute model inference by calling with python the run.py file. The run.py file requires an input folder (mounted above) and an output folder. If you use the same folder for input (/workspace/data) as for output, all output folders and files will be returned to your local disk.
+Now the container starts in interactive mode. In the command line you can execute model inference by calling with python the run.py file. The run.py file requires an inference_arguments.txt file where all the choice for input parameters are defined as tuples. If you use the same folder for input (/workspace/data) as for output, all output folders and files will be returned to your local disk.
+
+Below an example that should execute white matter lesion segmentation and return results in a mounted folder. For this example we mounted a local C:\usr\documents\data folder. A sub folder of our local folder (\originals) contains CT files (ID.nii.gz). In the C:\usr\documents\data the above stated inference_arguments.txt file is also inserted (please inspect the arguments used carefully).
 
 ```
-python /files/run.py /workspace/data/yourfolder /output/folder
+python /ctlesionseg/files/run.py /workspace/data/inference_arguments.txt
 ```
 
 ## The output folders
