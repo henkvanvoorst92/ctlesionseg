@@ -1,0 +1,7 @@
+#Ignore files when building docker
+/files
+*.txt
+.gitignore
+.git
+*.md
+.cache

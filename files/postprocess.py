@@ -82,10 +82,6 @@ if __name__ == "__main__":
 			p_vm_out = os.path.join(pid_out,ID+'_ventricle_mask.nii.gz')
 			sitk.WriteImage(VM,p_vm_out)
 
-			# PRED_VM = VM*PRED
-			# p_pred_vm_out = os.path.join(pid_out,ID+'_pred_vm.nii.gz')
-			# sitk.WriteImage(PRED_VM_DIL,p_pred_vm_dil_out)
-
 			VM_dil = sitk_dilate_mask(VM,vm_dilate_mm, dilate_2D=True)*BM
 			p_vm_dil_out = os.path.join(pid_out,ID+'_ventricle_mask_dil_{}mm.nii.gz'.format(vm_dilate_mm))
 			sitk.WriteImage(VM_dil,p_vm_dil_out)

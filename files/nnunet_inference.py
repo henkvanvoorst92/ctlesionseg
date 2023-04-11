@@ -6,15 +6,6 @@ import sys
 if __name__ == "__main__":
 	print('Running nnUnet for Inference')
 	#use arguments that are passed
-	#EXAMPLE ARGS:
-	# sys.argv = [
-	#     'file',
-	#     '/mnt/c/Users/henkvanvoorst/Documents/PhD/WML_docker/models/WMLCT',
-	#     '/mnt/c/Users/henkvanvoorst/Documents/PhD/WML_docker/sandbox/',
-	#     '525',
-	#     'Task525_WMLCT',
-	#     '2d'
-	#     ]
 	root_model = sys.argv[1] #where is the model root path? r'/data/projects/stroke/nnUnet_vol_vessels' #where model is
 	root_data = sys.argv[2] #import as argument (where images are)
 	path_in = os.path.join(root_data,'ImagesTs')

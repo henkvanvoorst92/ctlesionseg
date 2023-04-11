@@ -1,3 +1,2 @@
 # Ignore models and .dockerignore file
 /models
-.dockerignore

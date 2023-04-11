@@ -4,11 +4,12 @@
 FROM pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime
 WORKDIR /
 RUN  apt-get -y update && apt-get -y install git
+#RUN mkdir /workspace/data
 #copy files and models to local
-RUN git clone https://github.com/henkvanvoorst92/ctlesionseg/ /
+RUN git clone https://github.com/henkvanvoorst92/ctlesionseg
 COPY /models /models
-COPY /inference_arguments.txt /workspace/data
-RUN python -m pip install -r /requirements.txt
+#COPY ctlesionseg/inference_arguments.txt /workspace/data
+#RUN python -m pip install -r ctlesionseg/requirements.txt
 #set default workdir with scripts and args
 WORKDIR /workspace
 

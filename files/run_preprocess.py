@@ -27,9 +27,6 @@ if __name__ == "__main__":
 	path_model = dct_args['path_model'] #where is the model root path?
 	path_out = dct_args['path_out'] #output directory
 	analysis = dct_args['analysis']
-	# taskno = dct_args['taskno']
-	# taskname = dct_args['taskname']
-	# res = dct_args['res']
 	imagename = dct_args['imagename']
 	vm_dilate_mm = dct_args['vm_dilate_mm']
 
