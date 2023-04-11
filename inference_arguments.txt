@@ -1,5 +1,5 @@
 #Input path for directory with all CTs as .nii.gz
-('path_in', '/workspace/data')
+('path_in', '/workspace/data/original')
 #Path to the model directory
 ('path_model', '/models')
 #Output directory
