@@ -2,13 +2,15 @@
 ###select right container image
 #Pull base image with cuda capabilities 
 FROM pytorch/pytorch:1.9.0-cuda10.2-cudnn7-runtime
+WORKDIR /
 RUN  apt-get -y update && apt-get -y install git
 #copy files and models to local
-COPY /files /files
+RUN git clone https://github.com/henkvanvoorst92/ctlesionseg/ /
 COPY /models /models
-COPY /files/inference_arguments.txt /workspace/
-RUN python -m pip install -r /files/requirements.txt
+COPY /inference_arguments.txt /workspace/data
+RUN python -m pip install -r /requirements.txt
 #set default workdir with scripts and args
+WORKDIR /workspace
 
 #Q4: Does the program find everything like this?
 #run the program, maye write as cmd
