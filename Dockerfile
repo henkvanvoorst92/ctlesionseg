@@ -8,9 +8,11 @@ WORKDIR /
 RUN apt-get -y update && apt-get -y install git && pip install --upgrade pip && mkdir -p /workspace/data
 #Fetch all files with scripts for the image, ST
 COPY /files /ctlesionseg/files
+COPY /requirements.txt /ctlesionseg/requirements.txt
+COPY /inference_arguments.txt /workspace/inference_arguments.txt
 #Alternative: RUN git clone https://github.com/henkvanvoorst92/ctlesionseg 
 #Install other required packages
-RUN python -m pip install -r /ctlesionseg/files/requirements.txt
+RUN python -m pip install -r /ctlesionseg/requirements.txt
 #copy all models from the local pc to the image
 COPY /models /models
 #set default workdir with scripts and args
