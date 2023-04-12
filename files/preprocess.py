@@ -20,25 +20,38 @@ if __name__ == "__main__":
 	print('Preprocessing all NCCTs to be compatible with nnUnet input')
 	path_in = sys.argv[1] #import as argument
 	path_out = sys.argv[2] #import as argument
-
+	analysis = sys.argv[3]
 	#set other variables
-	if len(sys.argv)>3:
-		add_ventriclemask = sys.argv[3] #true or false --> will include use of ventricle mask
-	elif len(sys.argv)>4:
-		vm_dilate = sys.argv[4] #int --> if>0 will include dilate ventricle mask for lesion selection
+	if len(sys.argv)>4:
+		add_ventriclemask = sys.argv[4] #true or false --> will include use of ventricle mask
 	elif len(sys.argv)>5:
-		top_mm_rm, bottom_mm_rm = sys.argv[5], sys.argv[5]
+		vm_dilate = sys.argv[5] #int --> if>0 will include dilate ventricle mask for lesion selection
 	elif len(sys.argv)>6:
-		erode_mm_xy = sys.argv[6]
+		top_mm_rm, bottom_mm_rm = sys.argv[6], sys.argv[6]
+	elif len(sys.argv)>7:
+		erode_mm_xy = sys.argv[7]
+	elif len(sys.argv)>8:
+		clip_range = sys.argv[8]
 	else:
-		#Default variables
-		add_ventriclemask = True
-		vm_dilate_mm = 10 #dilation in mm of the ventricle mask (vm)
-		min_ventricle_vol = 1500 #in mm3
-		modality = '0000'
-		top_mm_rm, bottom_mm_rm = 40, 40 #removes mm's from top and bottom of brainmask slices
-		erode_mm_xy = 20 #erode brain mask in xy dims
-		sitk_type = sitk.sitkInt16
+		if analysis=='wml':
+			#Default variables
+			add_ventriclemask = True
+			vm_dilate_mm = 10 #dilation in mm of the ventricle mask (vm)
+			min_ventricle_vol = 1500 #in mm3
+			modality = '0000'
+			top_mm_rm, bottom_mm_rm = 40, 40 #removes mm's from top and bottom of brainmask slices
+			erode_mm_xy = 20 #erode brain mask in xy dims
+			clip_range = (0,100)
+		else: #for infarct lesion segmentation
+			add_ventriclemask = False
+			vm_dilate_mm = 0 #dilation in mm of the ventricle mask (vm)
+			min_ventricle_vol = None #in mm3
+			modality = '0000'
+			top_mm_rm, bottom_mm_rm = 0, 0 #removes mm's from top and bottom of brainmask slices
+			erode_mm_xy = 0 #erode brain mask in xy dims
+			clip_range = (0,1000)
+
+	sitk_type = sitk.sitkInt16
 
 	p_img_ts = os.path.join(path_out,'imagesTs')
 	p_bm_ts = os.path.join(path_out,'brainmask')
@@ -113,7 +126,7 @@ if __name__ == "__main__":
 
 				VM = sitk.Cast(np2itk(ventricle_mask, NCCT), sitk_type)
 			print(ID, 'VM done')
-			NCCT = sitk.Cast(clip_image(NCCT,0,100), sitk_type)
+			NCCT = sitk.Cast(clip_image(NCCT,*clip_range), sitk_type)
 
 			img_name = ID +'_'+modality+'.nii.gz'
 			label_name = ID +'.nii.gz'

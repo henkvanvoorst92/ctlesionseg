@@ -33,7 +33,10 @@ if __name__ == "__main__":
 	print('Arguments:',dct_args)
 
 	#Run the preprocess command
-	cmd_preprocess = 'python {} {} {}'.format(os.path.join(workingdir,'preprocess.py'), path_in, path_out)
+	cmd_preprocess = 'python {} {} {}'.format(os.path.join(workingdir,'preprocess.py'), 
+												path_in, 
+												path_out, 
+												analysis)
 	print(cmd_preprocess)
 	os.system(cmd_preprocess)
 
