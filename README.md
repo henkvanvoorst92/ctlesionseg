@@ -5,7 +5,7 @@ Docker hub link:  https://hub.docker.com/repository/docker/henkvanvoorst92/ctles
 \
 Related publications where segmentation models are described and validated:\
 White matter lesion segmentation: https://doi.org/10.1101/2023.03.20.23287467 \
-Infarct lesion segmentation at 24 hours and 1 week follow-up: https://doi.org/10.3174/ajnr.A7582 \
+Infarct lesion segmentation at 24 hours and 1 week follow-up: https://doi.org/10.3174/ajnr.A7582 
 
 ## How to install docker on your workstation
 ### For Linux OS:
