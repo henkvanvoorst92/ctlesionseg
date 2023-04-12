@@ -1,2 +1,3 @@
 # Ignore models and .dockerignore file
 /models
+*.md
