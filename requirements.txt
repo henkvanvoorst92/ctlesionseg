@@ -1,6 +1,12 @@
 
-#pip install --upgrade pip setuptools wheel
+#For installation without docker container (just on this github repo) use:
+#conda create -n nnunetv1 python=3.10
+#sklearn has been depricated, set variable below to allow for installation of older version
 #export SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True
+#according to the docker container torch 1.9 should be used with cuda 10.2 --> that is not possible on a lot of updated servers. This works too:
+#pip install torch==2.1.2 torchvision==0.16.2 torchaudio==2.1.2 --index-url https://download.pytorch.org/whl/cu121
+
+
 scikit-image==0.19.2
 simpleitk==2.1.1.2
 seaborn==0.11.0

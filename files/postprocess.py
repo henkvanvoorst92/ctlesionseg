@@ -29,6 +29,8 @@ if __name__ == "__main__":
 	vm_dilate_mm = ast.literal_eval(sys.argv[3])
 	if vm_dilate_mm >0:
 		use_ventriclemask = True
+	else:
+		use_ventriclemask = False
 	
 	p_img_ts = os.path.join(path,'imagesTs')
 	p_bm_ts = os.path.join(path,'brainmask')

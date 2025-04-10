@@ -83,10 +83,11 @@ def z_crop_mask(MASK,top_mm_rm,bottom_mm_rm):
 	bottom_crop_slices = int(bottom_mm_rm/zsp)
 	#get min and max mask slice
 	mask_slices = np.where(mask.argmax(axis=1).argmax(axis=1)>0)[0]
-	crop_min = min(mask_slices)+bottom_crop_slices 
-	crop_max = max(mask_slices)-top_crop_slices
-	MASK[:,:,:crop_min] = 0
-	MASK[:,:,crop_max:] = 0
+	if len(mask_slices)>0:
+		crop_min = min(mask_slices)+bottom_crop_slices
+		crop_max = max(mask_slices)-top_crop_slices
+		MASK[:,:,:crop_min] = 0
+		MASK[:,:,crop_max:] = 0
 	return MASK
 
 def sitk_erode_mm(mask,kernel_mm, background=0, foreground=1):

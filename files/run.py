@@ -33,11 +33,11 @@ if __name__ == "__main__":
 	print('Arguments:',dct_args)
 
 	#Run the preprocess command
-	cmd_preprocess = 'python {} {} {}'.format(os.path.join(workingdir,'preprocess.py'), 
+	cmd_preprocess = 'python {} {} {} {}'.format(os.path.join(workingdir,'preprocess.py'),
 												path_in, 
 												path_out, 
 												analysis)
-	print(cmd_preprocess)
+	print('Preprocess command:',cmd_preprocess)
 	os.system(cmd_preprocess)
 
 	# #Run the nnUnet inference script
@@ -50,9 +50,9 @@ if __name__ == "__main__":
 	os.system(cmd_inference)
 
 	#Run postprocess script
-	cmd_postprocess = 'python {} {} {} {}'.format(os.path.join(workingdir,'postprocess.py'), 
+	cmd_postprocess = 'python {} {} {} {}'.format(os.path.join(workingdir,'postprocess.py'),
 													path_out,
-													imagename, 
+													imagename,
 													vm_dilate_mm)
 	print(cmd_postprocess)
 	os.system(cmd_postprocess)

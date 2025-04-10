@@ -8,7 +8,7 @@ if __name__ == "__main__":
 	#use arguments that are passed
 	root_model = sys.argv[1] #where is the model root path? r'/data/projects/stroke/nnUnet_vol_vessels' #where model is
 	root_data = sys.argv[2] #import as argument (where images are)
-	path_in = os.path.join(root_data,'ImagesTs')
+	path_in = os.path.join(root_data,'imagesTs')
 	path_out = os.path.join(root_data,'predicted')
 	if not os.path.exists(path_out):
 	    os.makedirs(path_out)
