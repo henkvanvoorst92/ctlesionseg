@@ -1,5 +1,8 @@
+
+#pip install --upgrade pip setuptools wheel
+#export SKLEARN_ALLOW_DEPRECATED_SKLEARN_PACKAGE_INSTALL=True
 scikit-image==0.19.2
-simpleitk==2.1.1
+simpleitk==2.1.1.2
 seaborn==0.11.0
 scipy==1.7.3
 pandas==1.3.5
