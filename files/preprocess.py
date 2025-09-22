@@ -175,7 +175,7 @@ if __name__ == "__main__":
 						new_spacing = i*z_spacing
 			# Only blur along z
 			print(f'{ID}, blurring with sigma of {new_spacing/2.0}')
-			NCCT_blurred = gaussian_filter_mm(NCCT, [0.0, 0.0, new_spacing/2.0])
+			NCCT_blurred = gaussian_filter_mm(NCCT, [0.1, 0.1, new_spacing/2.0])
 			print(f'{ID}, resampling to slice spacing of {new_spacing}')
 			NCCT_resampled = Resample_slices(NCCT_blurred, new_spacing)
 			NCCT = NCCT_resampled
