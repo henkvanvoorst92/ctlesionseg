@@ -15,6 +15,72 @@ from utils import z_crop_mask
 from utils import sitk_erode_mm
 from utils import clip_image
 
+
+
+
+def gaussian_filter_mm(image: sitk.Image, sigmas_mm: list, method='recursive'):
+    """
+    Apply Gaussian smoothing with per-dimension sigma values given in millimeters.
+
+    Parameters
+    ----------
+    image : sitk.Image
+        Input image to smooth.
+    sigmas_mm : list of float
+        Standard deviations (sigma) for the Gaussian kernel in millimeters, per dimension.
+    method : str, optional
+        Gaussian filter method; either 'recursive' (default) or 'discrete'.
+
+    Returns
+    -------
+    sitk.Image
+        The Gaussian-filtered image.
+    """
+    if method == 'recursive':
+        # Fast IIR-based Gaussian smoothing
+        return sitk.SmoothingRecursiveGaussian(image, sigma=sigmas_mm)
+    elif method == 'discrete':
+        # Convolution-based Gaussian smoothing
+        # Note: DiscreteGaussian expects variance per dimension
+        variances = [s ** 2 for s in sigmas_mm]
+        return sitk.DiscreteGaussian(image, variance=variances)
+    else:
+        raise ValueError("method must be either 'recursive' or 'discrete'")
+
+def Resample_img(img, new_spacing=0.45, interpolator=sitk.sitkLinear):
+    #sitkBSplineResamplerOrder3
+    # new_spacing should be in sitk order x,y,z (np order: z,y,x)
+    if isinstance(new_spacing,int) or isinstance(new_spacing,float):
+       new_spacing = [new_spacing,new_spacing,new_spacing]
+    #https://github.com/SimpleITK/SimpleITK/issues/561
+    resample = sitk.ResampleImageFilter()
+    resample.SetInterpolator = interpolator
+    resample.SetOutputDirection(img.GetDirection()) 
+    resample.SetOutputOrigin(img.GetOrigin())
+    resample.SetOutputSpacing(new_spacing)
+    new_size = new_img_size(img,new_spacing)
+    resample.SetSize(new_size)
+    img = resample.Execute(img)
+    img = sitk.Cast(img, sitk.sitkInt32)
+    return img
+
+def Resample_slices(img, new_z_spacing=5, interpolator=sitk.sitkLinear):
+    #https://github.com/SimpleITK/SimpleITK/issues/561
+    resample = sitk.ResampleImageFilter()
+    resample.SetInterpolator = interpolator
+    resample.SetOutputDirection(img.GetDirection()) 
+    resample.SetOutputOrigin(img.GetOrigin())
+    new_spacing = [*img.GetSpacing()[:2],new_z_spacing]
+    resample.SetOutputSpacing(new_spacing)
+    new_n_slices = int(np.ceil(img.GetSize()[-1]*img.GetSpacing()[-1]/new_z_spacing))
+    resample.SetSize((*img.GetSize()[:2], new_n_slices))
+    img = resample.Execute(img)
+    img = sitk.Cast(img, sitk.sitkInt32)
+    return img
+
+
+
+
 #runs the preprocessing steps above to create nnUnet compatible dat
 if __name__ == "__main__":
 	print('Preprocessing all NCCTs to be compatible with nnUnet input')
@@ -96,6 +162,23 @@ if __name__ == "__main__":
 		p_ncct = os.path.join(path_in,f_ncct)
 		NCCT= sitk.Cast(sitk.ReadImage(p_ncct), sitk_type)
 		print(ID,'NCCT imported', NCCT.GetSize())
+
+		z_spacing = NCCT.GetSpacing()[-1]
+		print(f'{ID}, z-spacing: {z_spacing}')
+		if z_spacing < 3.0:
+			print(f'{ID}, z-spacing < 3.0 ({z_spacing})')
+			# downsample thin slices to 4.0 mm
+			new_spacing = 4.0
+			for i in range(2,10):
+					# try to fit a nice multiple of the current spacing
+					if i*z_spacing >= 3.5 and i*z_spacing < 5.0:
+						new_spacing = i*z_spacing
+			# Only blur along z
+			print(f'{ID}, blurring with sigma of {new_spacing/2.0}')
+			NCCT_blurred = gaussian_filter_mm(NCCT, [0.0, 0.0, new_spacing/2.0])
+			print(f'{ID}, resampling to slice spacing of {new_spacing}')
+			NCCT_resampled = Resample_slices(NCCT_blurred, new_spacing)
+			NCCT = NCCT_resampled
 
 		#create a (simple) brain mask (BM)
 		BM = sitk.BinaryThreshold(NCCT, lowerThreshold=0, upperThreshold=150,
